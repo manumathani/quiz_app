@@ -1,27 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import data from '../database/data'
+import React, { useEffect, useState } from 'react';
+
+import { useSelector } from 'react-redux';
+//Import custom hook
+import { useFetchQuestion } from '../hooks/FetchQuestions';
 
 export default function Questions() {
-    const [checked, setChecked] = useState(undefined);
+  const [checked, setChecked] = useState(undefined);
+  
+  const [{ isLoading, apiData, serverError }] = useFetchQuestion();
 
-    const question = data[0];
+  const state = useSelector(state => state)
 
-    
-    useEffect(() => {
-        console.log(question)
-    })
+  const trace = useSelector(state => state.question.trace)
+  const question = useSelector(state => state.question.queue[trace])
+  
+  //useEffect(() => console.log(state));
 
-    function onSelect(i) {
-        console.log('radio button changed')
-        console.log(i)
-    }
+  function onSelect(i) {
+    console.log(i);
+  };
+
 
   return (
       <div className='questions'>
-          <h2 className='text-light'>Simplie Question 1</h2>
+      <h2 className='text-light'>{ question?.question}</h2>
 
-          <ul key={question.id}>
-              {question.options.map((q, i) => (                  
+          <ul key={question?.id}>
+              {question?.options.map((q, i) => (                  
                 <li key={i}>
                     <input
                         type='radio'
@@ -32,7 +37,7 @@ export default function Questions() {
                       />
 
                     <label className='text-primary' htmlFor={`q${i}-option`}>{q}</label>
-                    <div className='check checked'></div> 
+                    <div className='check'></div> 
                       
                 </li>                              
               ))}                          
