@@ -32,11 +32,6 @@ export default function Quiz() {
       dispatch(moveNextQuestion());
       dispatch(pushResult(1))
     };
-
-
-   
-      
-
   };
 
   return (
