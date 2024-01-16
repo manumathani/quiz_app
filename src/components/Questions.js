@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 //Import custom hook
 import { useFetchQuestion } from '../hooks/FetchQuestions';
 
-export default function Questions() {
+export default function Questions({onChecked}) {
   const [checked, setChecked] = useState(undefined);
   
   const [{ isLoading, apiData, serverError }] = useFetchQuestion();
@@ -17,7 +17,7 @@ export default function Questions() {
   //useEffect(() => console.log(state));
 
   function onSelect(i) {
-    console.log(i);
+    onChecked(i)
   };
 
 
