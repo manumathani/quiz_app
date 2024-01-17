@@ -4,18 +4,18 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Questions from './Questions';
 import { moveNextQuestion, movePrevQuestion } from '../hooks/FetchQuestions';
-import { pushResult } from '../hooks/setResult';
+import { pushAnswer } from '../hooks/setResult';
 import { Navigate } from 'react-router-dom';
 
 export default function Quiz() {
   const [check, setChecked] = useState(undefined);
   
-  const result = useSelector(state => state.result)
+  const result = useSelector(state => state.result.result)
   const { queue, trace } = useSelector(state => state.question)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //console.log(state)
+    console.log(result)
   })
   /**Next button event handler */
   function onPrev() {
@@ -29,10 +29,11 @@ export default function Quiz() {
   function onNext() {
     console.log("Next Question")
 
-    if (trace < queue.length - 1 ) {
+    if (trace < queue.length) {
       /**Dispatch move next action */
+      dispatch(pushAnswer(check))
       dispatch(moveNextQuestion());
-      dispatch(pushResult(1))
+      
     };
   };
 
@@ -41,8 +42,8 @@ export default function Quiz() {
     setChecked(check)
   }
 
-  if(result.length && result.result >= queue.length){
-    return <Navigate to={'/result'} replace={true}/>
+  if(result.length && result.length >= queue.length){
+    return <Navigate to={'/result'} replace={true}></Navigate>
   }
 
   return (
