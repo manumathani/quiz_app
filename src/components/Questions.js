@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 //Import custom hook
 import { useFetchQuestion } from '../hooks/FetchQuestions';
+import { updateResultAction } from '../redux/result_reducer';
 
 export default function Questions({onChecked}) {
   const [checked, setChecked] = useState(undefined);
@@ -12,12 +13,18 @@ export default function Questions({onChecked}) {
   const state = useSelector(state => state)
 
   const trace = useSelector(state => state.question.trace)
-  const question = useSelector(state => state.question.queue[trace])
+  const question = useSelector(state => state.question.queue[trace]);
+
+  const dispatch = useDispatch();
   
-  //useEffect(() => console.log(state));
+  useEffect(() => {
+    dispatch(updateResultAction({trace, checked}))
+  
+  },[dispatch]);
 
   function onSelect(i) {
     onChecked(i)
+    setChecked(i)
   };
 
 
