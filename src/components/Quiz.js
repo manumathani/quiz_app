@@ -30,9 +30,14 @@ export default function Quiz() {
     console.log("Next Question")
 
     if (trace < queue.length) {
-      /**Dispatch move next action */
-      dispatch(pushAnswer(check))
+      /**Increase trace value by one using moveNextAction */
       dispatch(moveNextQuestion());
+
+      /**Insert new value in the array */
+      if(result.length <= trace){
+        dispatch(pushAnswer(check));
+      }
+      
       
     };
   };
@@ -42,6 +47,7 @@ export default function Quiz() {
     setChecked(check)
   }
 
+  /**Finish exam after last question */
   if(result.length && result.length >= queue.length){
     return <Navigate to={'/result'} replace={true}></Navigate>
   }
@@ -55,7 +61,7 @@ export default function Quiz() {
       <Questions onChecked={onChecked}/>
 
       <div className='grid'>
-        <button className='btn prev' onClick={onPrev}>Prev</button>
+        {trace > 0 ? <button className='btn prev' onClick={onPrev}>Prev</button> : <div/>}
         <button className='btn next' onClick={onNext}>Next</button>
       </div>
 
