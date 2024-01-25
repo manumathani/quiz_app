@@ -18,7 +18,6 @@ export default function Questions({onChecked}) {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    console.log({trace, checked});
     dispatch(updateResult({trace, checked}));   
   }, [checked]);
 
