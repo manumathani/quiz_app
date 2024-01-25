@@ -10,13 +10,16 @@ import { Navigate } from 'react-router-dom';
 export default function Quiz() {
   const [check, setChecked] = useState(undefined);
   
+  const state = useSelector(state => state)
   const result = useSelector(state => state.result.result)
   const { queue, trace } = useSelector(state => state.question)
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(result)
+  useEffect(()=> {
+    console.log(state)
   })
+
+  
   /**Next button event handler */
   function onPrev() {
     console.log("Previous Question")
@@ -38,6 +41,7 @@ export default function Quiz() {
         dispatch(pushAnswer(check));
       }
       
+      setChecked(undefined);
       
     };
   };
